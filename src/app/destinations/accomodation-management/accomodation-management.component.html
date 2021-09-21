@@ -1,0 +1,22 @@
+<p>accomodation-management works!</p>
+<form [formGroup]='inserForm' class="form-inline mb-3" (ngSubmit)="addMultiple()" autocomplete="off">
+    <div class="form-group px-2">
+        <label>Type: </label>
+        <select type="text" class="form-control ml-2" style="width: 150px;"
+        formControlName='type'
+        >
+        <option *ngFor="let type of typeList" [value]="type.value">
+            {{type.value}}
+        </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Number: </label>
+        <input type="text" class="form-control ml-2" style="width: 40px;"
+        formControlName='number'
+        >
+    </div>
+    <div class="form-group px-2">
+    <button class="btn btn-primary ml-1" type="submit">Enter multiple</button>
+    </div>
+</form>

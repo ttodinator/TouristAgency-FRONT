@@ -1,0 +1,25 @@
+<div class="text-center mt-4">
+    <h1>Destinations you have booked</h1>
+</div>
+<table class="table table-striped mt-5">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">City</th>
+        <th scope="col">Hotel</th>
+        <th scope="col">Number of people</th>
+        <th scope="col">Total price €</th>
+        <th scope="col">Start date</th>
+        <th scope="col">End date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let des of reservations">
+        <td>{{des.destinationCity}}</td>
+        <td>{{des.destinationHotel}}</td>
+        <td>{{des.numberOfPeople}}</td>
+        <td>{{des.totalPrice}}</td>
+        <td>{{des.startDate | date:'dd MM yyyy'}}</td>
+        <td>{{des.endDate | date:'dd MM yyyy'}}</td>
+      </tr>
+    </tbody>
+  </table>

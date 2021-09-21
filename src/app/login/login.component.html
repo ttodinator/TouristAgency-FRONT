@@ -1,0 +1,32 @@
+<form [formGroup]='loginForm' (ngSubmit)="login()" autocomplete="off">
+
+    <h2 class="text-center text-primary mt-5">Sign in</h2>
+    <hr>
+    <div class="form-group">
+        <input
+        [class.is-invalid]='loginForm.get("username").errors && loginForm.get("username").touched'
+        type="text" 
+        class="form-control" 
+        formControlName='username' 
+        placeholder="Username">
+        <div *ngIf="loginForm.get('username').hasError('required')" class="invalid-feedback"> Please enter a name</div>
+    </div>
+    <div class="form-group">
+        <input 
+        [class.is-invalid]='loginForm.get("password").errors && loginForm.get("password").touched'
+        type="password" 
+        class="form-control" 
+        formControlName='password' 
+        placeholder="Password">
+        <div *ngIf="loginForm.get('password').hasError('required')" class="invalid-feedback"> Please enter a password</div>
+    
+    </div>
+    <div class="form-group text-center">
+        <button [disabled]='!loginForm.valid' class="btn btn-success mr-2" type="submit">Login</button>
+        <button class="btn btn-danger mr-2" (click)="cancel()" type="button">Canel</button>
+    </div>
+
+
+</form>
+
+

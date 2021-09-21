@@ -1,0 +1,156 @@
+
+
+<h2 class="mt-4" style="text-align: center;">Admin panel</h2>
+<div class="tab-pannel mt-4">
+    <tabset class="member-tabset">
+        <tab heading='Edit destination' *appHasRole='["Admin","Moderator"]'>
+            <div class="container">
+                <h3 class="mt-3" style="text-align: center;">Hotel {{destination.hotel}} {{destination.city}}</h3>
+                <form [formGroup]='destinationForm' (ngSubmit)="editDestination()" autocomplete="off">
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label> <strong>City:</strong> </label>
+                                <input
+                                [class.is-invalid]='destinationForm.get("city").errors && destinationForm.get("city").touched'
+                                [class.is-valid]='destinationForm.get("city") && destinationForm.get("city").touched'
+                                type="text" 
+                                class="form-control"
+                                formControlName='city'
+                                >
+                                <div *ngIf="destinationForm.get('city').hasError('required')" class="invalid-feedback"> Please enter a city</div>
+                                <div *ngIf="destinationForm.get('city').hasError('minlength')" class="invalid-feedback"> Please enter a city with at least 2 charachters</div>
+                            
+                            </div>
+                            <div class="form-group">
+                                <label> <strong>Hotel:</strong> </label>
+                                <input
+                                [class.is-invalid]='destinationForm.get("hotel").errors && destinationForm.get("hotel").touched'
+                                [class.is-valid]='destinationForm.get("hotel") && destinationForm.get("hotel").touched'
+                                type="text" 
+                                class="form-control"
+                                formControlName='hotel'
+                                >
+                                <div *ngIf="destinationForm.get('hotel').hasError('required')" class="invalid-feedback"> Please enter a hotel name</div>
+                                <div *ngIf="destinationForm.get('hotel').hasError('minlength')" class="invalid-feedback"> Please enter a hotel name with at least 2 charachters</div>
+                            
+                            </div>
+                            <div class="form-group">
+                            <label> <strong>Type:</strong> </label>
+                            <select name="Type" 
+                            class="form-control mb-3"
+                            formControlName='type'
+                            >
+                                <option *ngFor="let type of typeList" [value]="type.value">
+                                    {{type.value}}
+                                </option>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label> <strong>Transportation:</strong> </label>
+                                <select name="Type" 
+                                class="form-control mb-3"
+                                formControlName='transportation'
+                                >
+                                    <option *ngFor="let type of transportationList" [value]="type.value">
+                                        {{type.value}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label> <strong>Stars:</strong> </label>
+                                <input
+                                [class.is-invalid]='destinationForm.get("stars").errors && destinationForm.get("stars").touched'
+                                [class.is-valid]='destinationForm.get("stars") && destinationForm.get("stars").touched'
+                                type="number" 
+                                class="form-control"
+                                max="7"
+                                min="2"
+                                formControlName='stars'
+                                >
+                                <div *ngIf="destinationForm.get('stars').hasError('required')" class="invalid-feedback"> Please enter numebr of stars</div>
+                                <div *ngIf="destinationForm.get('stars').hasError('min')" class="invalid-feedback"> Min stars is 2</div>
+                                <div *ngIf="destinationForm.get('stars').hasError('max')" class="invalid-feedback"> Max stars is 7</div>
+                
+                            </div>
+                            <!-- <div class="form-group">
+                                <label> <strong>Price:</strong> </label>
+                                <input
+                                [class.is-invalid]='destinationForm.get("price").errors && destinationForm.get("price").touched'
+                                [class.is-valid]='destinationForm.get("price") && destinationForm.get("price").touched'
+                                type="number" 
+                                class="form-control"
+                                formControlName='price'
+                                min="1"
+                                max="10000"
+                                >
+                                <div *ngIf="destinationForm.get('price').hasError('required')" class="invalid-feedback"> Please enter a price</div>
+                                <div *ngIf="destinationForm.get('price').hasError('max')" class="invalid-feedback"> Max price is 10000</div>
+                                <div *ngIf="destinationForm.get('price').hasError('min')" class="invalid-feedback"> Min price is 1</div>
+                            
+                            </div>
+                            <div class="form-group">
+                                <label> <strong>Rooms:</strong> </label>
+                                <div class="form-check" *ngFor="let room of roomsList">
+                                   
+                                    <input  class="form-check-input" type="checkbox" [value]="room.id" (change)="onCheckboxChange($event)" [checked]=room.checked>
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                      {{room.name}}
+                                    </label>
+                                  </div>
+                                  <label style="color: red;">*Must select at least one type of room</label>
+                      
+                              
+                            </div> -->
+                            <div class="form-group">
+                                <label> <strong>Description:</strong> </label>
+                                <textarea 
+                                [class.is-invalid]='destinationForm.get("description").errors && destinationForm.get("description").touched'
+                                [class.is-valid]='destinationForm.get("description") && destinationForm.get("description").touched'
+                                class="form-control" rows="6" formControlName='description'>
+                
+                                </textarea>
+                                <div *ngIf="destinationForm.get('description').hasError('required')" class="invalid-feedback"> Please enter a name</div>
+                                <div *ngIf="destinationForm.get('description').hasError('minlength')" class="invalid-feedback"> Please enter a name with at least 2 charachters</div>
+                            
+                            </div>
+                            <div class="form-group">
+                                <label> <strong>Trip plan:</strong> </label>
+                                <textarea 
+                                [class.is-invalid]='destinationForm.get("description").errors && destinationForm.get("description").touched'
+                                [class.is-valid]='destinationForm.get("description") && destinationForm.get("description").touched'
+                                class="form-control" rows="6" formControlName='description'>
+                
+                                </textarea>
+                                <div *ngIf="destinationForm.get('description').hasError('required')" class="invalid-feedback"> Please enter a name</div>
+                                <div *ngIf="destinationForm.get('description').hasError('minlength')" class="invalid-feedback"> Please enter a name with at least 2 charachters</div>
+                            
+                            </div>
+                            
+                            <div class="form-group text-center">
+                                <button [disabled]='!destinationForm.valid' class="btn btn-success mr-2" type="submit">Save</button>
+                                <button class="btn btn-danger mr-2" (click)="reset()" type="button">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+
+
+
+
+            </div>
+        </tab>
+        <tab heading='Manage accomodation' *appHasRole='["Admin","Moderator"]'>
+            <div class="container">
+                <app-destination-photo [destination]="destination"></app-destination-photo>
+            </div>
+        </tab>
+        <tab heading='Photo management' *appHasRole='["Admin","Moderator"]'>
+            <div class="container">
+                <app-destination-photo [destination]="destination"></app-destination-photo>
+            </div>
+        </tab>
+    </tabset>
+</div>
+

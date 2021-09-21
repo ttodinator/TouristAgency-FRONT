@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5">
+<form [formGroup]='editForm' (ngSubmit)="update()" autocomplete="off">
+
+    <h2 class="text-center text-primary mt-3">{{user.username | titlecase}}'s Profile</h2>
+    <hr>
+    <div class="form-group">
+        <label ><strong> Name:</strong></label>
+        <input
+        [class.is-invalid]='editForm.get("name").errors '
+        [class.is-valid]='editForm.get("name") && editForm.get("name").touched'
+        type="text" 
+        class="form-control" 
+        formControlName='name' 
+        placeholder="Name"
+        >
+        <div *ngIf="editForm.get('name').hasError('required')" class="invalid-feedback"> Please enter a name</div>
+        <div *ngIf="editForm.get('name').hasError('minlength')" class="invalid-feedback"> Please enter a name with at least 2 charachters</div>
+    </div>
+    <div class="form-group">
+        <label ><strong> Last name:</strong></label>
+        <input
+        [class.is-invalid]='editForm.get("surname").errors '
+        [class.is-valid]='editForm.get("surname") && editForm.get("surname").touched'
+        type="text" 
+        class="form-control" 
+        formControlName='surname' 
+        placeholder="Last name"
+        >
+        <div *ngIf="editForm.get('surname').hasError('required')" class="invalid-feedback"> Please enter a last name</div>
+        <div *ngIf="editForm.get('surname').hasError('minlength')" class="invalid-feedback"> Please enter a last name with at least 2 charachters</div>
+    </div>
+
+    <div class="form-group">
+        <label ><strong> Username:</strong></label>
+        <input
+        [class.is-invalid]='editForm.get("username").errors'
+        [class.is-valid]='editForm.get("username") && editForm.get("username").touched'
+        type="text" 
+        class="form-control" 
+        formControlName='username' 
+        placeholder="Username"
+        >
+        <div *ngIf="editForm.get('username').hasError('required')" class="invalid-feedback"> Please enter a usernname</div>
+        <div *ngIf="editForm.get('username').hasError('minlength')" class="invalid-feedback"> Please enter a username with at least 2 charachters</div>
+    </div>
+
+    <div class="form-group">
+        <label ><strong> Cellphone number:</strong></label>
+        <input
+        [class.is-invalid]='editForm.get("cellphoneNumber").errors '
+        [class.is-valid]='editForm.get("cellphoneNumber") && editForm.get("cellphoneNumber").touched'
+        type="text" 
+        class="form-control" 
+        formControlName='cellphoneNumber' 
+        placeholder="Cellphone number"
+        >
+        <div *ngIf="editForm.get('cellphoneNumber').hasError('required')" class="invalid-feedback"> Please enter cellphone number</div>
+        <div *ngIf="editForm.get('cellphoneNumber').hasError('pattern')" class="invalid-feedback"> Please enter a a valid cellphone number</div>
+        <div *ngIf="editForm.get('cellphoneNumber').hasError('maxlength')" class="invalid-feedback"> Cellphone number can only have up to 12 digits</div>
+    </div>
+    
+    <div class="form-group">
+        <label ><strong> Email:</strong></label>
+        <input
+        [class.is-invalid]='editForm.get("userEmail").errors '
+        [class.is-valid]='editForm.get("userEmail") && editForm.get("userEmail").touched'
+        type="text" 
+        class="form-control" 
+        formControlName='userEmail' 
+        placeholder="Email"
+        >
+        <div *ngIf="editForm.get('userEmail').hasError('required')" class="invalid-feedback"> Please enter an email</div>
+        <div *ngIf="editForm.get('userEmail').hasError('email')" class="invalid-feedback"> Please enter a valid email</div>
+    </div>
+    
+    <div class="form-group">
+        <label ><strong> Date of birth:</strong></label>
+        <div class="form-group">
+            <input type="text"
+                   placeholder="Datepicker"
+                   class="form-control"
+                   formControlName='dateOfBirth'
+                   [bsConfig]="{ dateInputFormat: 'YYYY MM DD' }"
+                   bsDatepicker>
+          </div>
+    </div>
+
+    
+
+    <div class="form-group text-center">
+        <button [disabled]='!editForm.valid' class="btn btn-success mr-2" type="submit">Update profile</button>
+    </div>
+
+
+</form>
+</div>
+</div>
+</div>

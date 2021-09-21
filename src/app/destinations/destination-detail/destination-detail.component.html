@@ -1,0 +1,360 @@
+<h1 class="mt-3 mb-3">Hotel {{destination.hotel}} {{destination.city}}</h1>
+
+  <carousel [isAnimated]="true" >
+
+      <slide *ngFor="let photo of destination.photos">
+        <img src="{{photo.url || './assets/user.png'}}" alt="first slide">
+      </slide>
+
+
+
+  </carousel>
+
+<div class="tab-panell mt-5">
+  <tabset>
+    <tab heading="Trip plan" id="tab1">
+      <textarea  rows="12" class="form-control mt-5">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam finibus orci velit, vel mattis leo hendrerit vitae. Nulla sit amet velit quis ante blandit feugiat eget gravida urna. Pellentesque eu tellus magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis feugiat maximus mauris, eu pretium elit aliquet id. Phasellus varius consectetur neque eu maximus. Maecenas ante velit, ornare sed viverra ac, facilisis ac eros. Integer tempor neque nulla, ac vestibulum augue facilisis vitae. Vivamus iaculis condimentum quam sit amet convallis.
+
+Etiam dui lorem, mattis eget quam in, dapibus imperdiet nulla. Mauris bibendum ac enim ac pellentesque. Morbi condimentum elementum lacus, vitae hendrerit felis euismod at. In porttitor mauris nibh, non rhoncus tortor mollis eleifend. Etiam nibh nunc, tincidunt ac nibh bibendum, dapibus finibus orci. Nunc at ornare odio, sed laoreet ipsum. Integer porttitor quis nulla ut ultricies. Ut in tincidunt lectus. Maecenas id dictum arcu, eu vestibulum purus. Vestibulum maximus mi urna, vel efficitur justo fringilla a. Suspendisse nec ante sed urna lobortis sollicitudin. Donec volutpat justo non orci faucibus, ac lobortis quam consectetur. Nunc mollis maximus augue id sodales. Maecenas a magna tincidunt, egestas sem in, porta sem.
+      </textarea>
+    </tab>
+    <tab heading="Description">
+      <textarea  rows="12" class="form-control mt-5">
+        Cras cursus aliquet ligula sit amet efficitur. Curabitur faucibus, leo et convallis lobortis, purus turpis congue nunc, vel fermentum tortor orci et eros. Fusce auctor, purus non vulputate blandit, mi est ullamcorper magna, ac auctor nibh nibh nec mi. Nulla facilisi. Etiam commodo dignissim ipsum ac maximus. Integer mauris mi, iaculis facilisis arcu sed, lacinia pellentesque eros. Vivamus ut odio sem. Ut ante sem, feugiat in ante vitae, dictum rhoncus augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent venenatis viverra nunc, et placerat justo suscipit in.
+
+Pellentesque et lorem et dui sollicitudin hendrerit. Aenean nisl tellus, pellentesque eget elementum sed, eleifend in metus. Duis sit amet risus rutrum, pharetra lorem in, aliquam mauris. Cras aliquet aliquam vehicula. Nam dignissim elementum mauris vitae semper. Suspendisse vel scelerisque risus, nec convallis magna. Mauris arcu felis, tincidunt quis sollicitudin nec, lacinia sed ex. Nulla sagittis vulputate odio molestie pharetra. Donec accumsan efficitur lectus, varius venenatis nulla consectetur nec. Nam feugiat maximus metus et condimentum.
+      </textarea>
+    </tab>
+    <tab heading="Location">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d254.85501523887052!2d20.68744429831172!3d43.72394433448136!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475700fb5b4c1fe7%3A0x97437e60723e06bb!2sHotel%20Turist!5e0!3m2!1ssr!2srs!4v1624753859397!5m2!1ssr!2srs" width="100%" height="500 px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </tab>
+    <tab heading="Book your trip">
+      <div class="row justify-content-center mt-3">
+        <div class="col-4 mt-4 text-center">
+          <h3 class="text-center">Select room type:</h3>
+          <select class="form-control mt-4 mb-4" [(ngModel)]="accomodationName" (change)="optionChange($event)">
+            <option [ngValue]="undefined" selected disabled>Select</option>
+            <option *ngFor="let item of distinctAccomodation" [value]="item">
+              {{item}}
+            </option>
+          </select>
+          <div *ngIf="freeAccomodation.length>0">
+            <div *ngIf="freeAccomodation.length<1">
+              <h3 style="color: red;" class="text-center">There aren't any rooms available</h3>
+            </div>
+            <button type="button" class="btn btn-success" (click)="openAccomodationModal(template)">Choose your room here</button>
+          </div>
+          
+    
+        </div>
+    
+      </div>
+      <div class="row justify-content-center mt-4 mb-4">
+        <div class="col text-center">
+          <div *ngIf="selectedAccomodation">
+            <table class="table table-striped mt-3 table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Room number</th>
+                  <th scope="col">Price per day</th>
+                  <th scope="col">Balcony</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{selectedAccomodation.roomNumber}}</td>
+                  <td>{{selectedAccomodation.pricePerDay}} €</td>
+                  <td>Yes</td>
+                </tr>
+              </tbody>
+            </table>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary"
+                  (click)="openUserPassportModal(userPassport)"
+                >
+                  {{userAsAPassengerText}}
+                </button>
+                <button type="button" class="btn btn-success" (click)="openPassengerModal(template1)">Enter passengers here</button>
+              </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-4 mb-4">
+        <div class="col text-center">
+          <div *ngIf="passengerList.length>0" id="tabelica">
+            <table class="table table-striped mt-3 table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
+                  <th scope="col">Phone number</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Passport number</th>
+                  <th scope="col">Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of passengerList">
+                  <td>{{item.id}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.surname}} </td>
+                  <td>{{item.phoneNumber}} </td>
+                  <td>{{item.email}} </td>
+                  <td>{{item.passportNumber}} </td>
+                  <td><button type="button" class="btn btn-warning btn-sm ml-1" (click)="openEditPassengerModal(editPassengerTemplate,item.id)"><i class="fas fa-highlighter"></i></button><button type="button" class="btn btn-danger btn-sm ml-1 " (click)="removePassenger(item.id)"><i class="fas fa-trash-alt"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-4 mb-4">
+        <div *ngIf="passengerList.length>0">
+          <button class="btn btn-primary btn-lg" (click)="bookReservation()">Book your reservation</button>
+        </div>
+      </div>
+
+    </tab>
+  </tabset>
+
+<tabset>
+  
+</tabset>
+
+
+
+
+
+
+
+
+
+</div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Available {{accomodationName}} rooms</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="freeAccomodation">
+      <table class="table table-striped mt-3 table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Room number</th>
+            <th scope="col">Price per day</th>
+            <th scope="col">Balcony</th>
+            <th scope="col">Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let des of freeAccomodation">
+            <td>{{des.roomNumber}}</td>
+            <td>{{des.pricePerDay}} €</td>
+            <td>Yes</td>
+            <td><button type="button" class="btn btn-success" [value]="des.id"  (click)="chooseAccomodation($event)" >Select</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #template1>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Enter passanger information</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef1?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]='passengerForm' (ngSubmit)="addPassenger()">
+      <div class="form-group">
+        <label><strong> Name:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("name").errors && passengerForm.get("name").touched'
+          [class.is-valid]='passengerForm.get("name") && passengerForm.get("name").touched' type="text"
+          class="form-control" formControlName='name' placeholder="Name">
+        <div *ngIf="passengerForm.get('name').hasError('required')" class="invalid-feedback"> Please enter a name</div>
+        <div *ngIf="passengerForm.get('name').hasError('minlength')" class="invalid-feedback"> Please enter a name with
+          at least 2 charachters</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Surname:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("surname").errors && passengerForm.get("surname").touched'
+          [class.is-valid]='passengerForm.get("surname") && passengerForm.get("surname").touched' type="text"
+          class="form-control" formControlName='surname' placeholder="Surname">
+        <div *ngIf="passengerForm.get('surname').hasError('required')" class="invalid-feedback"> Please enter a surname
+        </div>
+        <div *ngIf="passengerForm.get('surname').hasError('minlength')" class="invalid-feedback"> Please enter a surname
+          with at least 2 charachters</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Phone number:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("phoneNumber").errors && passengerForm.get("phoneNumber").touched'
+          [class.is-valid]='passengerForm.get("phoneNumber") && passengerForm.get("phoneNumber").touched' type="text"
+          class="form-control" formControlName='phoneNumber' placeholder="Phone number">
+        <div *ngIf="passengerForm.get('phoneNumber').hasError('required')" class="invalid-feedback"> Please enter a phone number
+        </div>
+        <div *ngIf="passengerForm.get('phoneNumber').hasError('pattern')" class="invalid-feedback"> Please enter a valid phone number</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Email:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("email").errors && passengerForm.get("email").touched'
+          [class.is-valid]='passengerForm.get("email") && passengerForm.get("email").touched' type="text"
+          class="form-control" formControlName='email' placeholder="Email">
+        <div *ngIf="passengerForm.get('email').hasError('pattern')" class="invalid-feedback"> Please enter a valid email</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Passport number:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("passportNumber").errors && passengerForm.get("passportNumber").touched'
+          [class.is-valid]='passengerForm.get("passportNumber") && passengerForm.get("passportNumber").touched' type="text"
+          class="form-control" formControlName='passportNumber' placeholder="Passport number">
+        <div *ngIf="passengerForm.get('passportNumber').hasError('required')" class="invalid-feedback"> Please enter a passport number
+        </div>
+        <div *ngIf="passengerForm.get('passportNumber').hasError('pattern')" class="invalid-feedback"> Please enter a valid passport number</div>
+      </div>
+      <div class="form-group text-center">
+        <button [disabled]='!passengerForm.valid' class="btn btn-success mr-2" type="submit">Add passenger</button>
+    </div>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<ng-template #editPassengerTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit passanger information</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefEdit?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]='passengerForm' (ngSubmit)="editPassenger()">
+      <div class="form-group">
+        <label><strong> Name:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("name").errors && passengerForm.get("name").touched'
+          [class.is-valid]='passengerForm.get("name") && passengerForm.get("name").touched' type="text"
+          class="form-control" formControlName='name' placeholder="Name">
+        <div *ngIf="passengerForm.get('name').hasError('required')" class="invalid-feedback"> Please enter a name</div>
+        <div *ngIf="passengerForm.get('name').hasError('minlength')" class="invalid-feedback"> Please enter a name with
+          at least 2 charachters</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Surname:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("surname").errors && passengerForm.get("surname").touched'
+          [class.is-valid]='passengerForm.get("surname") && passengerForm.get("surname").touched' type="text"
+          class="form-control" formControlName='surname' placeholder="Surname">
+        <div *ngIf="passengerForm.get('surname').hasError('required')" class="invalid-feedback"> Please enter a surname
+        </div>
+        <div *ngIf="passengerForm.get('surname').hasError('minlength')" class="invalid-feedback"> Please enter a surname
+          with at least 2 charachters</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Phone number:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("phoneNumber").errors && passengerForm.get("phoneNumber").touched'
+          [class.is-valid]='passengerForm.get("phoneNumber") && passengerForm.get("phoneNumber").touched' type="text"
+          class="form-control" formControlName='phoneNumber' placeholder="Phone number">
+        <div *ngIf="passengerForm.get('phoneNumber').hasError('required')" class="invalid-feedback"> Please enter a phone number
+        </div>
+        <div *ngIf="passengerForm.get('phoneNumber').hasError('pattern')" class="invalid-feedback"> Please enter a valid phone number</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Email:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("email").errors && passengerForm.get("email").touched'
+          [class.is-valid]='passengerForm.get("email") && passengerForm.get("email").touched' type="text"
+          class="form-control" formControlName='email' placeholder="Email">
+        <div *ngIf="passengerForm.get('email').hasError('pattern')" class="invalid-feedback"> Please enter a valid email</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Passport number:</strong></label>
+        <input [class.is-invalid]='passengerForm.get("passportNumber").errors && passengerForm.get("passportNumber").touched'
+          [class.is-valid]='passengerForm.get("passportNumber") && passengerForm.get("passportNumber").touched' type="text"
+          class="form-control" formControlName='passportNumber' placeholder="Passport number">
+        <div *ngIf="passengerForm.get('passportNumber').hasError('required')" class="invalid-feedback"> Please enter a passport number
+        </div>
+        <div *ngIf="passengerForm.get('passportNumber').hasError('pattern')" class="invalid-feedback"> Please enter a valid passport number</div>
+      </div>
+      <div class="form-group text-center">
+        <button [disabled]='!passengerForm.valid' class="btn btn-success mr-2" type="submit">Update passenger</button>
+    </div>
+    </form>
+  </div>
+</ng-template>
+
+
+<ng-template #userPassport>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit passanger information</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefUserPassport?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]='userPassportForm' (ngSubmit)="setUserAsAPassenger()" >
+      <div class="form-group">
+        <label><strong> Passport number:</strong></label>
+        <input [class.is-invalid]='userPassportForm.get("passportNumber").errors && userPassportForm.get("passportNumber").touched'
+          [class.is-valid]='userPassportForm.get("passportNumber") && userPassportForm.get("passportNumber").touched' type="text"
+          class="form-control" formControlName='passportNumber' placeholder="Passport number">
+        <div *ngIf="userPassportForm.get('passportNumber').hasError('required')" class="invalid-feedback"> Please enter a passport number
+        </div>
+        <div *ngIf="userPassportForm.get('passportNumber').hasError('pattern')" class="invalid-feedback"> Please enter a valid passport number</div>
+      </div>
+      <div class="form-group text-center">
+        <button [disabled]='!userPassportForm.valid' class="btn btn-success mr-2" type="submit">Update passenger</button>
+    </div>
+    </form>
+  </div>
+</ng-template>
+
+
+
+
+
+      <!-- <form [formGroup]='reservationForm' (ngSubmit)="reserve()" autocomplete="off">
+        <div class="form-group">
+          <label><strong> Select dates:</strong></label>
+          <div class="form-group">
+            <input type="text" placeholder="Pick your dates" class="form-control" formControlName='dates'
+              [bsConfig]="{ dateInputFormat: 'YYYY MM DD', adaptivePosition: true }" 
+              (ngModelChange)="updatePrice($event)"
+              bsDaterangepicker>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label> <strong>Select your room - number of people:</strong> </label>
+          <select name="Type" 
+          class="form-control mb-3"
+          formControlName='numberOfPeople'
+          (ngModelChange)="updatePrice($event)"
+          >
+              <option *ngFor="let room of destination.rooms" [value]="room.roomId">
+                  {{room.roomId}} quest
+              </option>
+          </select>
+          <div *ngIf="reservationForm.get('numberOfPeople').hasError('required')" class="invalid-feedback"> Please enter number of people</div>
+
+      </div>
+        <div class="form-group">
+          <label><strong> Total price : </strong></label>
+          <input hidden
+          type="number" 
+          class="form-control" 
+          formControlName='totalPrice' 
+
+          >
+          <label><strong>{{totalPriceFirst}} €</strong></label>
+        </div>
+
+
+        <div class="form-group text-center">
+          <button  [disabled]='totalPriceFirst==0' class="btn btn-success mr-2" type="submit">Book this trip</button>
+      </div>
+      </form> -->

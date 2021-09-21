@@ -1,0 +1,36 @@
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ml-5" href="/destinations"><strong> Sigma Travel</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="toggleNavbar()" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse ml-5" id="navbarTogglerDemo02" [ngClass]="{'show': navbarOpen}">
+      <ng-container *ngIf="accountService.currentUser$ | async" dropdown> 
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="/destinations" routerLinkActive='active'>Home</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="/crypto" routerLinkActive='active'>Crypto</a>
+          </li>
+          <li *appHasRole ='["Admin","Moderator"]' class="nav-item ">
+            <a class="nav-link" routerLink="/admin-panel" routerLinkActive='active'>Admin panel</a>
+          </li>
+        </ul>
+      </ng-container>
+      <div class="dropdown mr-5" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle><i class="far fa-user"></i> {{user.username | titlecase}}'s Profile</a>
+        <div class="dropdown-menu mt-3" *dropdownMenu>
+          <a  routerLink="/user-edit" class="dropdown-item"><i class="fas fa-user-edit"></i> Edit profile</a>
+          <div class="dropdown-divider"></div>
+          <a  routerLink="/user-reservations" class="dropdown-item"><i class="fas fa-check-circle"></i> Reservations</a>
+          <div class="dropdown-divider"></div>
+          <a  routerLink="/user-likes" class="dropdown-item"><i class="fas fa-heart"></i>  Likes</a>
+          <div class="dropdown-divider"></div>
+          <a  class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
