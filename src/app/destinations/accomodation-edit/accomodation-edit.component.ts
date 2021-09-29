@@ -1,27 +1,29 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { Accomodation } from 'src/app/_models/accomodation';
 import { Destination } from 'src/app/_models/destinations';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DestinationService } from 'src/app/_services/destination.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-accomodation-management',
-  templateUrl: './accomodation-management.component.html',
-  styleUrls: ['./accomodation-management.component.css']
+  selector: 'app-accomodation-edit',
+  templateUrl: './accomodation-edit.component.html',
+  styleUrls: ['./accomodation-edit.component.css']
 })
-export class AccomodationManagementComponent implements OnInit {
+export class AccomodationEditComponent implements OnInit {
 
   @Input() destination:Destination;
 
-  modalRef?: BsModalRef;
+  constructor(private modalService: BsModalService, private destinationService:DestinationService, private toast:ToastrService) { }
 
-  updatedDestination:boolean=false;
+  inserForm:FormGroup;
+
+  modalRef?: BsModalRef;
 
   currentlyEditedAccomodationIndex:number;
 
-  inserForm:FormGroup;
+
   editAccomodationForm:FormGroup;
 
   typeList=[
@@ -37,15 +39,14 @@ export class AccomodationManagementComponent implements OnInit {
     {value:false,text:'No'},
   ]
 
-  listCount=0;
-
-  constructor(private modalService: BsModalService, private destinatinServices:DestinationService, private toast:ToastrService) {
-    if(!this.destination){
-      console.log('PRAZNAAAAAAA')
-    }
-   }
+  listLength=0;
 
   ngOnInit(): void {
+    console.log(this.destination.accomodations)
+    for(let i=0;i<this.destination.accomodations.length;i++){
+      this.destination.accomodations[i].orderNo=i+1;
+      this.listLength++;
+    }
     this.initializeForm();
   }
 
@@ -62,40 +63,6 @@ export class AccomodationManagementComponent implements OnInit {
       roomNumber:new FormControl('0',[Validators.required,Validators.min(0),Validators.max(20000)]),
       balcony:new FormControl('No',[Validators.required]),
     })
-  }
-
-  addMultiple(){
-    for(let i=0;i<this.inserForm.controls['number'].value;i++){
-      let acc:Accomodation={
-        id:0,
-        destinationId:this.destination.id,
-        name:this.inserForm.controls['type'].value,
-        pricePerDay:0,
-        numberOfPeople:0,
-        occupied:false,
-        roomNumber:0,
-        balcony:false,
-        orderNo:this.listCount+1,
-        editable:false
-      }
-      this.destination.accomodations.push(acc);
-      this.listCount++;
-    }
-  }
-
-  removeFromList(orderNo:number){
-    for(let i=0;i<this.destination.accomodations.length;i++){
-      if(this.destination.accomodations[i].orderNo==orderNo){
-        let index=this.destination.accomodations.indexOf(this.destination.accomodations[i]);
-        if(index>-1){
-          this.destination.accomodations.splice(index,1);
-        }
-      }
-    }
-    this.listCount--;
-    for(let i=0;i<this.destination.accomodations.length;i++){
-      this.destination.accomodations[i].orderNo=i+1;
-    }
   }
 
   editAccomodation(template: TemplateRef<any>,orderNumber:number){
@@ -128,11 +95,48 @@ export class AccomodationManagementComponent implements OnInit {
     this.modalRef?.hide();
   }
 
+  addMultiple(){
+    for(let i=0;i<this.inserForm.controls['number'].value;i++){
+      let acc:Accomodation={
+        id:0,
+        destinationId:this.destination.id,
+        name:this.inserForm.controls['type'].value,
+        pricePerDay:0,
+        numberOfPeople:0,
+        occupied:false,
+        roomNumber:0,
+        balcony:false,
+        orderNo:this.listLength+1,
+        editable:true
+      }
+      this.destination.accomodations.push(acc);
+      this.listLength++;
+    }
+  }
+
+  removeFromList(orderNo:number){
+    for(let i=0;i<this.destination.accomodations.length;i++){
+      if(this.destination.accomodations[i].orderNo==orderNo){
+        let index=this.destination.accomodations.indexOf(this.destination.accomodations[i]);
+        if(index>-1){
+          this.destination.accomodations.splice(index,1);
+        }
+      }
+    }
+    this.listLength--;
+    for(let i=0;i<this.destination.accomodations.length;i++){
+      this.destination.accomodations[i].orderNo=i+1;
+    }
+  }
+
   saveAccomodation(){
     console.log(this.destination);
-    this.destinatinServices.saveAccomodations(this.destination).subscribe(res=>{
-      this.updatedDestination=true;
-      this.toast.success('Accomodations added successfully')
+    this.destinationService.updateAccomodations(this.destination).subscribe(res=>{
+      //this.destinationService=true;
+      this.toast.success('Accomodations updated successfully')
+      for(let i=0;i<this.destination.accomodations.length;i++){
+        this.destination.accomodations[i].editable=false;
+      }
     })
   }
 

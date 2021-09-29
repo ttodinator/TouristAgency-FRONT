@@ -68,7 +68,6 @@ export class DestinationEditComponent implements OnInit {
       description:new FormControl('',[Validators.required,Validators.minLength(2)]),
       price:new FormControl('',[Validators.required,Validators.min(1), Validators.max(10000)]),
       type:new FormControl('Europe',[Validators.required]),
-      rooms:new FormArray([],this.roomsValidation())
     });
 
     this.destinationForm.patchValue({
@@ -80,21 +79,8 @@ export class DestinationEditComponent implements OnInit {
       description:this.destination.description,
       price:this.destination.price,
       type:this.destination.type,
-      rooms:this.destination.rooms
     })
 
-    let num=0;
-    const checkArray: FormArray = this.destinationForm.get('rooms') as FormArray;
-
-    for(let i=0;i<this.destination.rooms.length;i++){
-      for(let j=0;j<this.roomsList.length;j++){
-        if(this.destination.rooms[i].roomId==this.roomsList[j].id){
-          this.roomsList[j].checked=true;
-          checkArray.push(new FormControl(this.roomsList[j].id.toString()));
-          num++;
-        }
-      }
-    }
   }
 
   roomsValidation():ValidatorFn{
@@ -116,21 +102,21 @@ export class DestinationEditComponent implements OnInit {
   }
 
 
-  onCheckboxChange(e) {
-    const checkArray: FormArray = this.destinationForm.get('rooms') as FormArray;
+  // onCheckboxChange(e) {
+  //   const checkArray: FormArray = this.destinationForm.get('rooms') as FormArray;
   
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      let i: number = 0;
-      checkArray.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
-          checkArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
-  }
+  //   if (e.target.checked) {
+  //     checkArray.push(new FormControl(e.target.value));
+  //   } else {
+  //     let i: number = 0;
+  //     checkArray.controls.forEach((item: FormControl) => {
+  //       if (item.value == e.target.value) {
+  //         checkArray.removeAt(i);
+  //         return;
+  //       }
+  //       i++;
+  //     });
+  //   }
+  // }
 
 }

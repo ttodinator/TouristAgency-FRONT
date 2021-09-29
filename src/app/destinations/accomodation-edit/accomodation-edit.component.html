@@ -1,0 +1,115 @@
+<h2  class="text-center">Edit accomodation for this destination</h2>
+
+<div   class="row justify-content-center">
+  <form [formGroup]='inserForm' class="form-inline mt-4 mb-3" (ngSubmit)="addMultiple()" autocomplete="off">
+      <div class="form-group px-2">
+          <label>Type: </label>
+          <select type="text" class="form-control ml-2" style="width: 140px;"
+          formControlName='type'
+          >
+          <option *ngFor="let type of typeList" [value]="type.value">
+              {{type.value}}
+          </option>
+          </select>
+      </div>
+      <div class="form-group">
+          <label>Number: </label>
+          <input type="text" class="form-control ml-2" style="width: 60px;"
+          formControlName='number'
+          >
+      </div>
+      <div class="form-group px-2">
+      <button class="btn btn-primary ml-2" type="submit">Add accomodations  <i class="fas fa-plus-square"></i></button>
+      </div>
+  </form>
+</div>
+<div class="row justify-content-center">
+<table class="table table-striped mt-4 table-hover text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Room type</th>
+        <th scope="col">Room number</th>
+        <th scope="col">Price per day</th>
+        <th scope="col">Balcony</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of destination.accomodations">
+        <td>{{item.orderNo}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.roomNumber}}</td>
+        <td>{{item.pricePerDay}} €</td>
+        <td *ngIf="item.balcony"><i class="fas fa-check"></i></td>
+        <td *ngIf="!item.balcony"><i class="fas fa-times"></i></td>
+        <!-- <td><button type="button" class="btn btn-warning btn-sm ml-1" (click)="editAccomodation(template,item.orderNo)" ><i class="fas fa-highlighter"></i></button><button type="button" class="btn btn-danger btn-sm ml-1 " (click)="removeFromList(item.orderNo)" ><i class="fas fa-trash-alt"></i></button></td> -->
+        <td><button type="button" class="btn btn-warning btn-sm ml-1" (click)="editAccomodation(template,item.orderNo)"><i class="fas fa-highlighter"></i></button><button *ngIf="item.editable" type="button" class="btn btn-danger btn-sm ml-1 " (click)="removeFromList(item.orderNo)" ><i class="fas fa-trash-alt"></i></button></td>
+      
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row justify-content-center">
+  <div >
+    <button class="btn btn-success text-center" (click)="saveAccomodation()">Save acomodations</button>
+  </div>
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]='editAccomodationForm' (ngSubmit)="updateAccomodation()">
+      <div class="form-group">
+        <label><strong> Type:</strong></label>
+        <select type="text" class="form-control"
+          formControlName='type'
+        >
+          <option *ngFor="let type of typeList" [value]="type.value">
+              {{type.value}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><strong> Price per day:</strong></label>
+        <input [class.is-invalid]='editAccomodationForm.get("pricePerDay").errors && editAccomodationForm.get("pricePerDay").touched'
+          [class.is-valid]='editAccomodationForm.get("pricePerDay") && editAccomodationForm.get("pricePerDay").touched' type="text"
+          class="form-control" formControlName='pricePerDay' >
+        <div *ngIf="editAccomodationForm.get('pricePerDay').hasError('required')" class="invalid-feedback"> Please enter a price
+        </div>
+        <div *ngIf="editAccomodationForm.get('pricePerDay').hasError('min')" class="invalid-feedback"> Minimum price is 1</div>
+        <div *ngIf="editAccomodationForm.get('pricePerDay').hasError('max')" class="invalid-feedback"> Maximum price is 10000</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Room number:</strong></label>
+        <input [class.is-invalid]='editAccomodationForm.get("roomNumber").errors && editAccomodationForm.get("roomNumber").touched'
+          [class.is-valid]='editAccomodationForm.get("roomNumber") && editAccomodationForm.get("roomNumber").touched' type="text"
+          class="form-control" formControlName='roomNumber'>
+        <div *ngIf="editAccomodationForm.get('roomNumber').hasError('required')" class="invalid-feedback"> Please enter a phone number
+        </div>
+        <div *ngIf="editAccomodationForm.get('roomNumber').hasError('min')" class="invalid-feedback"> Minimum room number is 1</div>
+        <div *ngIf="editAccomodationForm.get('roomNumber').hasError('max')" class="invalid-feedback"> Maximum price is 20000</div>
+      </div>
+      <div class="form-group">
+        <label><strong> Balcony:</strong></label>
+        <select type="text" class="form-control"
+          formControlName='balcony'
+        >
+          <option *ngFor="let type of balconyList" [value]="type.value">
+              {{type.text}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group text-center">
+        <button [disabled]='!editAccomodationForm.valid' class="btn btn-success mr-2" type="submit">Update</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

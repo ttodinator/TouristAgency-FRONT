@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Reservation } from '../_models/reservation';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -18,6 +19,11 @@ export class ReservationService {
   addReservation(model:any){
 
     return this.http.post(this.baseUrl+'reservation',model);
+  }
+
+  getReservationsForDestination(destinationId:number){
+    return this.http.get<Reservation[]>(this.baseUrl+'reservation/'+destinationId);
+
   }
 
   

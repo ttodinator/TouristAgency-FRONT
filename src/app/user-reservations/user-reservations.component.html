@@ -10,6 +10,8 @@
         <th scope="col">Total price €</th>
         <th scope="col">Start date</th>
         <th scope="col">End date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Passengers</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +22,47 @@
         <td>{{des.totalPrice}}</td>
         <td>{{des.startDate | date:'dd MM yyyy'}}</td>
         <td>{{des.endDate | date:'dd MM yyyy'}}</td>
+        <th *ngIf="des.status=='Created'" scope="col"><span class="badge badge-warning">Created</span></th>
+        <th *ngIf="des.status=='Rejected'" scope="col"><span class="badge badge-danger">Rejected</span></th>
+        <th *ngIf="des.status=='Approved'" scope="col"><span class="badge badge-success">Approved</span></th>
+        <td><button class="btn btn-success" (click)="viewPassengers(des.reservationId)" (click)="lgModal.show()" ><i class="fas fa-users"></i></button></td>
       </tr>
     </tbody>
   </table>
+
+
+  <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-sizes-name1">
+<div class="modal-dialog modal-lg">
+ <div class="modal-content">
+   <div class="modal-header">
+     <h4 id="dialog-sizes-name1" class="modal-title pull-left">Large modal</h4>
+     <button type="button" class="btn-close close pull-right" (click)="lgModal.hide()" aria-label="Close">
+       <span aria-hidden="true" class="visually-hidden">&times;</span>
+     </button>
+   </div>
+   <div class="modal-body">
+    <table class="table table-striped mt-5">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Surname</th>
+          <th scope="col">Phone number</th>
+          <th scope="col">Email</th>
+          <th scope="col">Passport number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let des of selectedReservation?.passengers">
+          <td>{{des.name}}</td>
+          <td>{{des.surname}}</td>
+          <td>{{des.phoneNumber}}</td>
+          <td>{{des.email}}</td>
+          <td>{{des.passportNumber}}</td>
+        </tr>
+      </tbody>
+    </table>
+   </div>
+ </div>
+</div>
+</div>

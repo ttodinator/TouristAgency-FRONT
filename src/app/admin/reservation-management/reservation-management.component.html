@@ -1,0 +1,57 @@
+
+<div class="text-center mt-4">
+    <h1>All reservations for this destination</h1>
+</div>
+<table class="table table-striped mt-5">
+    <thead class="thead-dark">
+      <tr class="text-center">
+        <th scope="col">City</th>
+        <th scope="col">Hotel</th>
+        <th scope="col">Number of people</th>
+        <th scope="col">Total price €</th>
+        <th scope="col">Start date</th>
+        <th scope="col">End date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Passengers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let des of reservations" class="text-center">
+        <td>{{des.destinationCity}}</td>
+        <td>{{des.destinationHotel}}</td>
+        <td>{{des.numberOfPeople}}</td>
+        <td>{{des.totalPrice}}</td>
+        <td>{{des.startDate | date:'dd MM yyyy'}}</td>
+        <td>{{des.endDate | date:'dd MM yyyy'}}</td>
+        <th *ngIf="des.status=='Created'" scope="col"><span class="badge badge-warning" (click)="editStatus(template,des.reservationId)">Created</span></th>
+        <th *ngIf="des.status=='Rejected'" scope="col"><span class="badge badge-danger" (click)="editStatus(template,des.reservationId)">Rejected</span></th>
+        <th *ngIf="des.status=='Approved'" scope="col"><span class="badge badge-success" (click)="editStatus(template,des.reservationId)">Approved</span></th>
+        <td><button class="btn btn-success"   ><i class="fas fa-users"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit reservation status</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="col mb-3 text-center">
+            <button class="btn btn-lg btn-success">Approved</button>
+
+        </div>
+        <div class="col mb-3 text-center">
+        <button class="btn btn-lg btn-danger">Rejected</button>
+            
+        </div>
+        <div class="col mb-3 text-center">
+        <button class="btn btn-lg btn-warning">Created</button>
+            
+        </div>
+
+    </div>
+  </ng-template>

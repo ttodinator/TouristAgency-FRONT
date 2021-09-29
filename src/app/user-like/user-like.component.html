@@ -1,14 +1,13 @@
 <div class="text-center mt-4">
     <h1>Destinations you have liked</h1>
 </div>
-<table class="table table-striped mt-5">
+<table class="table table-striped mt-5 text-center">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Hotel</th>
         <th scope="col">City</th>
         <th scope="col">Stars</th>
         <th scope="col">Transportation</th>
-        <th scope="col">Price €</th>
         <th scope="col"><a><i class="fas fa-arrow-right"></i></a></th>
       </tr>
     </thead>
@@ -19,7 +18,6 @@
         <td>{{des.stars}} <i class="fas fa-star"></i></td>
         <td *ngIf="des.transportation=='Plane'"><i class="fas fa-plane"></i></td>
         <td *ngIf="des.transportation=='Bus'"><i class="fas fa-bus"></i></td>
-        <td>{{des.price}} €</td>
         <td><a routerLink="../destinations/{{des.hotel}}"><i class="fas fa-arrow-right"></i></a></td>
       </tr>
     </tbody>

@@ -129,4 +129,12 @@ export class DestinationService {
     return this.http.get<Accomodation[]>(this.baseUrl+'destination/free/?destinationId='+destinationId+'&accomodationName='+accomodationName);
   }
 
+  saveAccomodations(model:any){
+    return this.http.put<Destination>(this.baseUrl+'destination/save-accomodations',model);
+  }
+
+  updateAccomodations(model:any){
+    return this.http.put<Destination>(this.baseUrl+'destination/update-accomodations',model);
+  }
+
 }

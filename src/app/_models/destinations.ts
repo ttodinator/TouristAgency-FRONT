@@ -1,4 +1,5 @@
 
+import { Accomodation } from "./accomodation";
 import { Photo } from "./photo";
 import { Room } from "./rooms";
 
@@ -17,4 +18,6 @@ export interface Destination{
     photos:Photo[];
     photoUrl:string;
     likesCount:number;
+    accomodations:Accomodation[];
+    minPrice:number;
 }

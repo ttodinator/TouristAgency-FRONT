@@ -6,4 +6,7 @@ export interface Accomodation{
     numberOfPeople:number;
     occupied:boolean;
     roomNumber:number;
+    orderNo:number;
+    balcony:boolean;
+    editable:boolean;
 }

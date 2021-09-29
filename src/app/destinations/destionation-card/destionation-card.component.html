@@ -3,11 +3,11 @@
  
     <div class="row no-gutters">
       <div class="col-md-3">
-        <img src="{{destination.photoUrl || './assets/user.png'}}" class="card-img" >
+        <img src="{{destination.photoUrl || './assets/hotel-default-img.jpg'}}" class="card-img" >
       </div>
       <div class="col-md-9">
         <div class="card-body">
-          <h5 class="card-title">Hotel {{destination.hotel}} {{destination.city}} {{destination.price}} €</h5>
+          <h5 class="card-title">Hotel {{destination.hotel}} {{destination.city}} <span class="text-danger"> from {{destination.minPrice}} €</span> </h5>
           <p *ngIf="destination.likesCount>1 || destination.likesCount<1" class="card-text">{{destination.likesCount}} users have liked this</p>
           <p *ngIf="destination.likesCount==1" class="card-text">{{destination.likesCount}} user have liked this</p>
           <button class="btn btn-danger" *ngIf="isLiked==false" (click)="userLike(destination)">

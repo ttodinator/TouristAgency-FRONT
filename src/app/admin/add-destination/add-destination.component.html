@@ -1,6 +1,6 @@
 <div *ngIf="!!addedDestination">
 <app-destionation-card [destination]="addedDestination"></app-destionation-card>
-<app-accomodation-management></app-accomodation-management>
+<app-accomodation-management [destination]="addedDestination"></app-accomodation-management>
 </div>
 <form *ngIf="!addedDestination" [formGroup]='destinationForm' (ngSubmit)="addDestination()" autocomplete="off">
     <div class="row justify-content-center mt-3">

@@ -143,12 +143,17 @@
         </tab>
         <tab heading='Manage accomodation' *appHasRole='["Admin","Moderator"]'>
             <div class="container">
-                <app-destination-photo [destination]="destination"></app-destination-photo>
+                <app-accomodation-edit [destination]="destination"></app-accomodation-edit>
             </div>
         </tab>
         <tab heading='Photo management' *appHasRole='["Admin","Moderator"]'>
             <div class="container">
                 <app-destination-photo [destination]="destination"></app-destination-photo>
+            </div>
+        </tab>
+        <tab heading='Reservation management' *appHasRole='["Admin","Moderator"]'>
+            <div class="container">
+                <app-reservation-management [destination]="destination"></app-reservation-management>
             </div>
         </tab>
     </tabset>

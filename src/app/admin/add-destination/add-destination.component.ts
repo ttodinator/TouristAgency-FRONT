@@ -125,6 +125,7 @@ export class AddDestinationComponent implements OnInit {
     this.destinationService.addDestination(this.destinationForm.value).subscribe(response=>{
       
       console.log(response);
+      response.accomodations=[];
       this.addedDestination=response;
       this.toastr.success('You have successfully saved a destination')
     })

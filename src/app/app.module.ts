@@ -42,6 +42,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FooterComponent } from './footer/footer.component';
 import { CurrencyComponent } from './currency/currency.component';
 import { AccomodationManagementComponent } from './destinations/accomodation-management/accomodation-management.component';
+import { AccomodationEditComponent } from './destinations/accomodation-edit/accomodation-edit.component';
+import { ReservationManagementComponent } from './admin/reservation-management/reservation-management.component';
 
 
 
@@ -71,6 +73,8 @@ import { AccomodationManagementComponent } from './destinations/accomodation-man
     FooterComponent,
     CurrencyComponent,
     AccomodationManagementComponent,
+    AccomodationEditComponent,
+    ReservationManagementComponent,
   ],
   imports: [
     CommonModule,
