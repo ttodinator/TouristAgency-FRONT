@@ -23,9 +23,9 @@
         <td>{{des.totalPrice}}</td>
         <td>{{des.startDate | date:'dd MM yyyy'}}</td>
         <td>{{des.endDate | date:'dd MM yyyy'}}</td>
-        <th *ngIf="des.status=='Created'" scope="col"><span class="badge badge-warning" (click)="editStatus(template,des.reservationId)">Created</span></th>
-        <th *ngIf="des.status=='Rejected'" scope="col"><span class="badge badge-danger" (click)="editStatus(template,des.reservationId)">Rejected</span></th>
-        <th *ngIf="des.status=='Approved'" scope="col"><span class="badge badge-success" (click)="editStatus(template,des.reservationId)">Approved</span></th>
+        <th *ngIf="des.status=='Created'" scope="col"><span class="badge badge-warning" (click)="editStatus(template,des.reservationId,des.userId,des.accomodationId)">Created</span></th>
+        <th *ngIf="des.status=='Rejected'" scope="col"><span class="badge badge-danger" (click)="editStatus(template,des.reservationId,des.userId,des.accomodationId)">Rejected</span></th>
+        <th *ngIf="des.status=='Approved'" scope="col"><span class="badge badge-success" (click)="editStatus(template,des.reservationId,des.userId,des.accomodationId)">Approved</span></th>
         <td><button class="btn btn-success"   ><i class="fas fa-users"></i></button></td>
       </tr>
     </tbody>
@@ -41,15 +41,15 @@
     </div>
     <div class="modal-body">
         <div class="col mb-3 text-center">
-            <button class="btn btn-lg btn-success">Approved</button>
+            <button class="btn btn-lg btn-success" (click)="changeStatus(1)">Approved</button>
 
         </div>
         <div class="col mb-3 text-center">
-        <button class="btn btn-lg btn-danger">Rejected</button>
+        <button class="btn btn-lg btn-danger" (click)="changeStatus(2)">Rejected</button>
             
         </div>
         <div class="col mb-3 text-center">
-        <button class="btn btn-lg btn-warning">Created</button>
+        <button class="btn btn-lg btn-warning" (click)="changeStatus(3)">Created</button>
             
         </div>
 

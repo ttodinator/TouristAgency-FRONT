@@ -26,5 +26,9 @@ export class ReservationService {
 
   }
 
+  changeReservationstatus(model:any){
+    return this.http.put(this.baseUrl+'reservation',model);
+
+  }
   
 }

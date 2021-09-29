@@ -11,4 +11,6 @@ export interface Reservation{
     endDate: Date;
     passengers:Passenger[];
     status:string;
+    userId:number;
+    accomodationId:number;
 }
